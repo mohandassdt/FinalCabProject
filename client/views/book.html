@@ -1,0 +1,211 @@
+
+<style>
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 23px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button1 {border-radius: 2px;}
+</style>
+<!-- <div class="container">
+  <button class="btn btn-info btn-block" style="width:85%"><h4>BOOK YOUR CAB</h4></button>
+<div style="margin-top:-45px">
+  <div class="row">
+		<div class="col-md-6">
+  <div class="well-searchbox">
+      <form class="form-horizontal" role="form">
+          <div class="form-group">
+              <label class="col-md-4 control-label">Pickup Location</label>
+              <div class="col-md-8">
+                  <input type="text" id="txtSource" class="form-control" placeholder="Pickup Location">
+              </div>
+          </div>
+
+          <div class="form-group">
+              <label class="col-md-4 control-label">Destination</label>
+              <div class="col-md-8">
+                <input type="text" id="txtDestination"  class="form-control" placeholder="Destination">
+
+              </div>
+          </div>
+
+          <div class="form-group">
+              <label class="col-md-4 control-label">Pickup Time</label>
+              <div class="col-md-8">
+                <input type="time" id="timeT" class="form-control">
+
+              </div>
+          </div>
+
+          <div class="form-group">
+              <label class="col-md-4 control-label">Car Type</label>
+              <div class="col-md-8">
+                <select class="form-control"    onchange="GetRoute()" id="selectedType" ng-model="bokc.Type" style=" width:231px;height: 34px;border-color: aliceblue;">
+                <option style="text align:cenetr;color:#999" disabled selected >Car Type</option>
+                <option  ng-repeat="tp in typelist">{{tp.CrTp}}</option>
+
+                </select>
+
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-md-4 control-label">Pickup Date</label>
+              <div class="col-md-8">
+                <input type="Date" id="dateT" ng-blur="fareDetails()"  class="form-control">
+
+              </div>
+          </div>
+
+
+          <div class="form-group">
+              <label class="col-md-4 control-label">Land Mark 1</label>
+              <div class="col-md-8">
+                <input type="text"  ng-model="bokc.Landmark1" class="form-control" placeholder="**required**">
+
+              </div>
+          </div>
+
+          <div class="form-group">
+              <label class="col-md-4 control-label">Land Mark 2</label>
+              <div class="col-md-8">
+                <input type="text"  ng-model="bokc.Landmark2" class="form-control" placeholder="**optional**">
+
+              </div>
+          </div>
+
+          <div class="col-sm-offset-4 col-sm-5">
+              <button type="submit"  ng-click="clickBook()" class="btn btn-success">BOOK</button>
+          </div>
+
+
+
+      </form>
+  </div></div>
+
+    <div class="col-md-6">
+<div class="panel panel-primary" ng-show="bokc.Type" style="margin-top: 83px;width:50%;">
+      <div class="panel-heading">
+        <h3 class="panel-title">Fare Deatls</h3>
+      </div>
+      <div class="panel-body">
+        <p id="dvDistance"></p>
+        <p id="dvTime"></p>
+        Amount:  <i class="fa fa-inr"></i><p id="totalCabFare" style="margin-top: -20px;margin-left:29%;"></p>
+
+        </div>
+
+             <div id="dvMap" style="width: 950px; height: 500px; display:none;">
+             </div>
+
+             <div id="dvPanel" style="width: 950px; height:500px;display:none;">
+             </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div> -->
+
+<div id="dvMap" style="width: 950px; height: 500px; display:none;">
+</div>
+
+<div id="dvPanel" style="width: 950px; height:500px;display:none;"></div>
+
+<!-- <div id="Container" class="container"> -->
+
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script> -->
+
+  <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCThItoZpHNB20PsHrGJ12KJyfKpT55iXs&callback=initMap">
+   </script> -->
+
+  <div class="container">
+    <a href="/" class="btn btn-success" ng-click="LogoutUser()" style="margin-top: 10px;margin-left: 49%;">LogOut</a>
+
+  <div class="row">
+     <div class='col-md-12'>
+      <div class='col-md-4' style="color:white">
+
+        <div>
+
+<div ng-show="NewDriver" style="color:white">
+<!-- <div> -->
+  <h4 style="color:yellow">Driver Details</h4>
+Driver name:<p id="YourdriverDetailsName" style="color:white"></p>
+Driver MailID: <p id="YourdriverDetailsmail" style="color:white"></p>
+Driver Mobile: <p id="YourdriverDetails" style="color:white"></p>
+
+</div>
+
+<p id="customerContainer" style="color:white;display:none"/></p>
+<p id="container1" style="color:white;"></p>
+
+
+<div ng-show="hideDetails">
+          Your Location : <input id="address" class="form-control" type="text"/><br/>
+          Destination: <input class="autocomplete form-control" id="ac1" type="text" required></input>
+          Choose Cab Type :<select class="form-control"  ng-change="GetRoute()" ng-model="bokc.Type" required>
+  <option  ng-repeat="tp in typelist" value="{{tp.CrTp}}">{{tp.CrTp}}</option>                 </select>
+<div style="display:none;">
+  lat : <input id="latitude" class="form-control" type="text"/><br/>
+  lat : <input id="longitude" class="form-control" type="text"/><br/>
+</div>
+
+
+
+                     <!-- <input type="radio"  ng-model="tripType" ng-change="get()" Name="triptype"  value="Round Trip">Round Trip
+
+             <input type="radio"  ng-model="tripType" ng-change="get()" Name="triptype"  value="One Way">One Way -->
+
+          <div ng-show="buttonDetails" style="padding:10px">   <button class="btn btn-primary" ng-click="clickBook()" style="padding:10px">Ride Now</button>
+             <button class="btn btn-primary" ng-click="clickBookLater()" style="padding:10px">Ride Later</button>
+           </div>
+        </div></div>
+<div ng-show="calDetails" style="margin-left:-38px;padding: 25px;">
+  <button class="button button1" style="width: 109px;"><i class="fa fa-rupee" style="font-size:48px;color:red"></i><br><p id="totalCabFare"></p></button>
+  <button class="button button1"><span class="glyphicon glyphicon-road" style="font-size:42px;color:red"></span><br><p id="totalDist"></p></button>
+  <button class="button button1"><span class="glyphicon glyphicon-time" style="font-size:42px;color:red"></span><br><p id="totalTime"></p></button>
+
+  <button class="btn btn-primary" ng-click="confirmBookingNow()">Confirm</button>
+
+</div>
+
+<div ng-show="laterDetails">
+
+  Pickup Time : <input id="timeV" class="form-control" type="time"/><br/>
+  Pickup Date:<input type="Date" id="dateT" ng-blur="fareDetailsLater()"  class="form-control"><br/>
+  LandMark:<input type="text"  ng-model="bokc.Landmark1" class="form-control" placeholder="**required**">
+</div>
+<div ng-show="calDisDetails">
+  <button class="button button1" style="width: 109px;"><i class="fa fa-rupee" style="font-size:48px;color:red"></i><br><p id="totalCabFare1"></p></button>
+  <button class="button button1"><span class="glyphicon glyphicon-road" style="font-size:42px;color:red"></span><br><p id="totalDist1"></p></button>
+  <button class="button button1"><span class="glyphicon glyphicon-time" style="font-size:42px;color:red"></span><br><p id="totalTime1"></p></button>
+
+<button class="btn btn-primary" ng-click="confirmlaterBooking()">Confirm</button>
+
+
+</div>
+
+
+
+        </div>
+
+        <div class='col-md-8'>
+          <div id="myMap" ng-show="hideMap" style="width: 550px; height: 570px;">
+
+
+           </div>
+           </div>
+  </div></div>
+
+        </div>
+
+
+</div>
